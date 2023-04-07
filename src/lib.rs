@@ -60,7 +60,7 @@ pub async fn create_server() -> std::io::Result<()> {
         .await
 }
 
-pub async fn create_job_handler() {
+pub fn create_job_handler() {
     loop {
         match get_connection() {
             Ok(mut connection) => {
@@ -72,16 +72,27 @@ pub async fn create_job_handler() {
                         if let Some(request_contents) = request_contents {
                             let queued_job: QueuedCompletionJob =
                                 from_str(&request_contents).unwrap();
+                            let job_id = queued_job.job_id.clone();
+                            let prompts = queued_job.prompts.clone();
 
-                            tokio::spawn(async {
-                                info!(target: "app", "Ready to execute one completion job");
-                                JobBuilder::new(queued_job.job_id)
-                                    .set_messages(queued_job.prompts)
-                                    .finalize()
-                                    .completion()
-                                    .await
-                                    .unwrap();
-                            });
+                            tokio::runtime::Builder::new_multi_thread()
+                                .enable_all()
+                                .build()
+                                .unwrap()
+                                .spawn(async move {
+                                    info!(target: "app", "Ready to execute one completion job");
+                                    match JobBuilder::new(job_id)
+                                        .set_messages(prompts)
+                                        .finalize()
+                                        .completion()
+                                        .await
+                                    {
+                                      Err(e) => 
+                                      error!(target: "app", "Error happended when executing completion job `{}`: {:?}", queued_job.job_id, e),
+                                      Ok(_)=>
+                                      info!(target:"app", "Completion job `{}` finished.", queued_job.job_id)
+                                    };
+                                });
                         } else {
                             std::thread::sleep(Duration::from_millis(500));
                         }
