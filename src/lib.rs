@@ -61,6 +61,7 @@ pub async fn create_server() -> std::io::Result<()> {
 }
 
 pub fn create_job_handler() {
+    
     loop {
         match get_connection() {
             Ok(mut connection) => {
@@ -70,16 +71,14 @@ pub fn create_job_handler() {
                 {
                     Ok(request_contents) => {
                         if let Some(request_contents) = request_contents {
-                            let queued_job: QueuedCompletionJob =
-                                from_str(&request_contents).unwrap();
-                            let job_id = queued_job.job_id.clone();
-                            let prompts = queued_job.prompts.clone();
-
-                            tokio::runtime::Builder::new_multi_thread()
-                                .enable_all()
-                                .build()
-                                .unwrap()
-                                .spawn(async move {
+                            std::thread::spawn(move || {
+                                let queued_job: QueuedCompletionJob =
+                                  from_str(&request_contents).unwrap();
+                                let job_id = queued_job.job_id.clone();
+                                let prompts = queued_job.prompts.clone();
+  
+                                let rt = tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap();
+                                rt.block_on(async move {
                                     info!(target: "app", "Ready to execute one completion job");
                                     match JobBuilder::new(job_id)
                                         .set_messages(prompts)
@@ -93,6 +92,7 @@ pub fn create_job_handler() {
                                       info!(target:"app", "Completion job `{}` finished.", queued_job.job_id)
                                     };
                                 });
+                            });
                         } else {
                             std::thread::sleep(Duration::from_millis(500));
                         }
