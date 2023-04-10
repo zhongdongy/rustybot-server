@@ -104,7 +104,7 @@ pub fn create_job_handler() {
                                   from_str(&request_contents).unwrap();
                                 let job_id = queued_job.job_id.clone();
                                 let prompts = queued_job.prompts.clone();
-                                std::thread::sleep(Duration::from_secs(1));
+                                std::thread::sleep(Duration::from_secs(2));
                                 let rt = tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap();
                                 rt.block_on(async move {
                                     info!(target: "app", "Ready to execute one completion job");
