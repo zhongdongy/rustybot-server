@@ -7,9 +7,9 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4.3.1"
+async-tcp-channel = "0.1.1"
 log = "0.4.17"
 log4rs = "1.2.0"
-paho-mqtt = { version = "0.12.1", features = ["bundled", "ssl"] }
 redis = "0.23.0"
 rust-ai = "0.1.10"
 serde = { version = "1.0.159", features = ["derive"] }

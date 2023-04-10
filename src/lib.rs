@@ -1,6 +1,8 @@
+use std::sync::mpsc::channel;
 use std::time::Duration;
 
 use actix_web::{post, web, App, HttpServer};
+use atc::{ChannelCommand, ServerCommand, Server};
 use log::{debug, error, info};
 use serde_json::{from_str, to_string};
 use utils::redis::get_connection;
@@ -61,8 +63,33 @@ pub async fn create_server() -> std::io::Result<()> {
 }
 
 pub fn create_job_handler() {
+    let (tx_message, rx_message) = channel();
+
+    let (tx_message_async, rx_message_async) = tokio::sync::mpsc::channel::<ServerCommand>(1024);
     
+
+
+    let rt = tokio::runtime::Builder::new_multi_thread().enable_all().build().unwrap();
+    let _eg = rt.enter();
+
+    tokio::spawn(async move {
+        Server::new("0.0.0.0:52926".into(), rx_message_async).start().await.unwrap();
+    });
+
+
+
     loop {
+
+        // Try to get message from internal threads and forward to Async TCP 
+        // Channel server.
+        if let Ok(ChannelCommand::ChannelMessage((job_id,message))) = rx_message.try_recv() {
+            let tx_message_async =tx_message_async.clone();
+            tokio::spawn(async move {
+                tx_message_async.send(ServerCommand::Message(Some(job_id), message)).await.unwrap();
+            });
+        }
+
+
         match get_connection() {
             Ok(mut connection) => {
                 match redis::cmd("LPOP")
@@ -71,6 +98,7 @@ pub fn create_job_handler() {
                 {
                     Ok(request_contents) => {
                         if let Some(request_contents) = request_contents {
+                            let sender_clone = tx_message.clone();
                             std::thread::spawn(move || {
                                 let queued_job: QueuedCompletionJob =
                                   from_str(&request_contents).unwrap();
@@ -80,7 +108,7 @@ pub fn create_job_handler() {
                                 let rt = tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap();
                                 rt.block_on(async move {
                                     info!(target: "app", "Ready to execute one completion job");
-                                    match JobBuilder::new(job_id)
+                                    match JobBuilder::new(job_id, sender_clone.clone())
                                         .set_messages(prompts)
                                         .finalize()
                                         .completion()

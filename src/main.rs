@@ -14,9 +14,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     std::thread::spawn(|| {
         create_job_handler()
     });
-    // rt.spawn(async {
-    //     create_job_handler().await;
-    // });
 
     tokio::runtime::Runtime::new().unwrap().block_on(async {
         create_server().await.unwrap();

@@ -6,14 +6,24 @@ appenders:
     path: "log/app.log"
     encoder:
       pattern: "{d} {l} - {m}{n}"
-  mqtt_appender:
-    kind: file
-    path: "log/mqtt.log"
-    encoder:
-      pattern: "{d} {l} - {m}{n}"
   openai_appender:
     kind: file
     path: "log/openai.log"
+    encoder:
+      pattern: "{d} {l} - {m}{n}"
+  atc_listener_appender:
+    kind: file
+    path: "log/atc_listener.log"
+    encoder:
+      pattern: "{d} {l} - {m}{n}"
+  atc_connector_appender:
+    kind: file
+    path: "log/atc_connector.log"
+    encoder:
+      pattern: "{d} {l} - {m}{n}"
+  atc_frame_appender:
+    kind: file
+    path: "log/atc_frame.log"
     encoder:
       pattern: "{d} {l} - {m}{n}"
  
@@ -29,13 +39,23 @@ loggers:
     appenders:
       - app_appender
     additive: false
-  mqtt:
-    level: debug
-    appenders:
-      - mqtt_appender
-    additive: false
   openai:
     level: debug
     appenders:
       - openai_appender
+    additive: false
+  atc-listener:
+    level: debug
+    appenders:
+      - atc_listener_appender
+    additive: false
+  atc-connector:
+    level: debug
+    appenders:
+      - atc_connector_appender
+    additive: false
+  atc-frame:
+    level: debug
+    appenders:
+      - atc_frame_appender
     additive: false
