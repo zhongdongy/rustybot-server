@@ -4,7 +4,6 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Config {
-    pub mqtt: MQTT,
     pub redis: Redis,
 }
 
@@ -25,17 +24,6 @@ impl Config {
             Err("Unable to read `config.yml`".into())
         };
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Serialize)]
-pub struct MQTT {
-    pub url: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub client: Option<String>,
-    pub tls: bool,
-    pub username: String,
-    pub password: String,
-    pub topic_prefix: Option<String>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
