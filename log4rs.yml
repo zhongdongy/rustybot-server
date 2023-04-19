@@ -40,22 +40,22 @@ loggers:
       - app_appender
     additive: false
   openai:
-    level: debug
+    level: info
     appenders:
       - openai_appender
     additive: false
   atc-listener:
-    level: debug
+    level: info
     appenders:
       - atc_listener_appender
     additive: false
   atc-connector:
-    level: debug
+    level: info
     appenders:
       - atc_connector_appender
     additive: false
   atc-frame:
-    level: debug
+    level: info
     appenders:
       - atc_frame_appender
     additive: false
