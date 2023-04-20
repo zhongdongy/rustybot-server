@@ -1,8 +1,6 @@
 use actix_web::{post, web, App, HttpResponse, HttpServer};
 use rust_ai::openai::ChatCompletion;
 
-pub mod models;
-
 #[post("/v1/chat/completions")]
 async fn completions(data: web::Json<ChatCompletion>) -> HttpResponse {
     let client = reqwest::Client::new();
