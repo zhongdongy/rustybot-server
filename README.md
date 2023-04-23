@@ -18,3 +18,14 @@ RUST_BACKTRACE=1 RUST_LOG=info cargo run
 ```powershell
 $env:RUST_LOG='debug'; $env:RUST_BACKTRACE=1; cargo run; $env:RUST_LOG='';
 ```
+
+### Configuration
+
+`auth.yml` is used when authenticating user requests.
+
+```yaml
+users:
+- id: haoqiy
+  key: 89d5xxxx-xxxx-xxxx-xxxx-xxxx7d405249
+  note: "Da ge"
+```
