@@ -36,6 +36,12 @@ async fn version_info() -> HttpResponse {
     }
 }
 
+async fn verify_authentication() -> HttpResponse {
+    HttpResponse::Ok()
+        .content_type("application/json")
+        .body(r#"{"result": "pass"}"#)
+}
+
 pub async fn create_server() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
@@ -44,6 +50,11 @@ pub async fn create_server() -> std::io::Result<()> {
                 web::scope("/v1")
                     .wrap(AuthenticateMiddlewareFactory::new())
                     .route("/chat/completions", web::post().to(completions)),
+            )
+            .service(
+                web::scope("/auth")
+                    .wrap(AuthenticateMiddlewareFactory::new())
+                    .route("/verify", web::get().to(verify_authentication)),
             )
     })
     .bind(("0.0.0.0", 9090))?

@@ -1,9 +1,17 @@
 latest:
-  version: "0.1.4"
+  version: "0.1.5"
+  date: "2023-04-23"
+  url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.5-x86_64.msi"
+  description: |
+    - 修复: 状态查询时提示问题
+    - 修复: 无法发送文本的问题
+    - 新增: 校验用户输入的密钥信息
+    - 新增: 快捷打开日志文件目录
+history:
+- version: "0.1.4"
   date: "2023-04-23"
   url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.4-x86_64.msi"
   description: |
     - 新增: 权限验证
     - 新增: 模型选择功能
     - 更新: 界面交互和部分逻辑优化
-history:
