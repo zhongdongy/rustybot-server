@@ -1610,9 +1610,9 @@ dependencies = [
 
 [[package]]
 name = "rust-ai"
-version = "0.1.12"
+version = "0.1.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "49ef341fc98e64ae8b7e053dffb326963eb81e89dd37b39ea49e47768b3aa613"
+checksum = "9b751ccaa535e12dc83f8ab22ec3496db472a7cb52defa0e4c017d2c7b702ec5"
 dependencies = [
  "isolang",
  "lazy_static",

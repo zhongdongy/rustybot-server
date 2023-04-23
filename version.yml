@@ -1,0 +1,9 @@
+latest:
+  version: "0.1.4"
+  date: "2023-04-23"
+  url: "https://www.google.com"
+  description: |
+    - 新增: 权限验证
+    - 新增: 模型选择功能
+    - 更新: 界面交互和部分逻辑优化
+history:

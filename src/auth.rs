@@ -43,10 +43,12 @@ pub fn auth_with_file(id: &str, hash: &str, salt: &str) -> bool {
         if let Ok(auth) = serde_yaml::from_str::<AuthConfig>(&auth_contents) {
             if let Some(user) = auth.find(id) {
                 if user.hash(salt) == hash {
+                    log::debug!(target: "app", "Authentication passed");
                     return true;
                 }
             }
         }
     }
+    log::warn!(target: "app", "Authentication failed");
     return false;
 }

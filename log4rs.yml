@@ -11,21 +11,6 @@ appenders:
     path: "log/openai.log"
     encoder:
       pattern: "{d} {l} - {m}{n}"
-  atc_listener_appender:
-    kind: file
-    path: "log/atc_listener.log"
-    encoder:
-      pattern: "{d} {l} - {m}{n}"
-  atc_connector_appender:
-    kind: file
-    path: "log/atc_connector.log"
-    encoder:
-      pattern: "{d} {l} - {m}{n}"
-  atc_frame_appender:
-    kind: file
-    path: "log/atc_frame.log"
-    encoder:
-      pattern: "{d} {l} - {m}{n}"
  
 
 root:
@@ -43,19 +28,4 @@ loggers:
     level: info
     appenders:
       - openai_appender
-    additive: false
-  atc-listener:
-    level: info
-    appenders:
-      - atc_listener_appender
-    additive: false
-  atc-connector:
-    level: info
-    appenders:
-      - atc_connector_appender
-    additive: false
-  atc-frame:
-    level: info
-    appenders:
-      - atc_frame_appender
     additive: false

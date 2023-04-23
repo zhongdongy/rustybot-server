@@ -1,14 +1,19 @@
-use actix_web::{post, web, App, HttpResponse, HttpServer};
+use std::path::PathBuf;
+
+use actix_web::{web, App, HttpResponse, HttpServer};
 use middleware::AuthenticateMiddlewareFactory;
 use rust_ai::openai::ChatCompletion;
 
-use crate::request::{post_remote, post_remote_stream};
+use crate::{
+    request::{post_remote, post_remote_stream},
+    types::version::VersionInfo,
+};
 
+pub mod auth;
 pub mod middleware;
 pub mod request;
-pub mod auth;
+pub mod types;
 
-#[post("/v1/chat/completions")]
 async fn completions(data: web::Json<ChatCompletion>) -> HttpResponse {
     let endpoint = "/v1/chat/completions";
     if data.stream.is_none() || data.stream == Some(false) {
@@ -20,11 +25,26 @@ async fn completions(data: web::Json<ChatCompletion>) -> HttpResponse {
     }
 }
 
+async fn version_info() -> HttpResponse {
+    if PathBuf::from("version.yml").exists() {
+        let contents = std::fs::read_to_string(PathBuf::from("version.yml")).unwrap();
+        let version_info: VersionInfo = serde_yaml::from_str(&contents).unwrap();
+
+        HttpResponse::Ok().json(version_info)
+    } else {
+        HttpResponse::InternalServerError().finish()
+    }
+}
+
 pub async fn create_server() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .wrap(AuthenticateMiddlewareFactory::new())
-            .service(completions)
+            .service(web::scope("/info").route("/version", web::get().to(version_info)))
+            .service(
+                web::scope("/v1")
+                    .wrap(AuthenticateMiddlewareFactory::new())
+                    .route("/chat/completions", web::post().to(completions)),
+            )
     })
     .bind(("0.0.0.0", 9090))?
     .run()

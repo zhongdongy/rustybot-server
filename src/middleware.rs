@@ -76,9 +76,9 @@ where
 }
 
 async fn authenticate(req: &ServiceRequest) -> bool {
-    let header_hash = req.headers().get("X-Rustybot-Hash");
-    let header_salt = req.headers().get("X-Rustybot-Salt");
-    let header_id = req.headers().get("X-Rustybot-Id");
+    let header_hash = req.headers().get("x-rustybot-hash");
+    let header_salt = req.headers().get("x-rustybot-salt");
+    let header_id = req.headers().get("x-rustybot-id");
     if header_hash.is_some() && header_salt.is_some() && header_id.is_some() {
         let hash = header_hash.unwrap().to_str().unwrap();
         let salt = header_salt.unwrap().to_str().unwrap();
