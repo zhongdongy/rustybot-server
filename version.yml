@@ -1,7 +1,7 @@
 latest:
   version: "0.1.4"
   date: "2023-04-23"
-  url: "https://www.google.com"
+  url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.4-x86_64.msi"
   description: |
     - 新增: 权限验证
     - 新增: 模型选择功能
