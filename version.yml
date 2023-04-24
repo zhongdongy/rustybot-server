@@ -1,5 +1,13 @@
 latest:
-  version: "0.1.5"
+  version: "0.1.6"
+  date: "2023-04-24"
+  url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.6-x86_64.msi"
+  description: |
+    - 新增: 复制文本时的弹窗
+    - 新增: 鼠标悬停文字时的交互
+    - 更新: 提问和答复消息的布局位置
+history:
+- version: "0.1.5"
   date: "2023-04-23"
   url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.5-x86_64.msi"
   description: |
@@ -7,7 +15,6 @@ latest:
     - 修复: 无法发送文本的问题
     - 新增: 校验用户输入的密钥信息
     - 新增: 快捷打开日志文件目录
-history:
 - version: "0.1.4"
   date: "2023-04-23"
   url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.4-x86_64.msi"
