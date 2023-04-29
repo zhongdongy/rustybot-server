@@ -1,0 +1,10 @@
+[package]
+name = "rustybot-macros"
+edition = "2021"
+version = "0.1.0"
+
+[dependencies]
+quote = "1.0"
+
+[lib]
+proc-macro = true
