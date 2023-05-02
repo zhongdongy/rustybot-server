@@ -6,6 +6,11 @@ appenders:
     path: "log/app.log"
     encoder:
       pattern: "{d} {l} - {m}{n}"
+  sql_appender:
+    kind: file
+    path: "log/sql.log"
+    encoder:
+      pattern: "{d} {l} - {m}{n}"
   openai_appender:
     kind: file
     path: "log/openai.log"
@@ -24,8 +29,13 @@ loggers:
     appenders:
       - app_appender
     additive: false
+  sql:
+    level: debug
+    appenders:
+      - sql_appender
+    additive: false
   openai:
-    level: info
+    level: debug
     appenders:
       - openai_appender
     additive: false

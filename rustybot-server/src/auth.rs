@@ -52,3 +52,23 @@ pub fn auth_with_file(id: &str, hash: &str, salt: &str) -> bool {
     log::warn!(target: "app", "Authentication failed");
     return false;
 }
+
+pub async fn auth_with_db(id: &str, hash: &str, salt: &str) -> bool {
+    use crate::models::Auth;
+    if let Ok(auth) = Auth::auth(id).await {
+        if let Some(auth) = auth {
+            if auth.hash(salt).await == hash {
+                log::debug!(target:"app", "Authentication passed");
+                return true;
+            } else {
+                log::warn!(target: "app", "Authentication failed due to incorrect credentials");
+            }
+        } else {
+            log::warn!(target: "app", "Authentication failed due to no auth info of user `{}` found", id);
+        }
+        return false;
+    } else {
+        log::warn!(target: "app", "Authentication failed due to database query failed.");
+        return false;
+    }
+}

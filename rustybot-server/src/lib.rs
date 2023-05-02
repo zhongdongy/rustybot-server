@@ -1,27 +1,43 @@
 use std::path::PathBuf;
 
-use actix_web::{web, App, HttpResponse, HttpServer};
-use middleware::AuthenticateMiddlewareFactory;
-use rust_ai::openai::ChatCompletion;
-
 use crate::{
     request::{post_remote, post_remote_stream},
     types::version::VersionInfo,
 };
+use actix_web::{web, App, HttpResponse, HttpServer};
+use bytes::Bytes;
+use middleware::AuthenticateMiddlewareFactory;
+use rust_ai::openai::ChatCompletion;
+use tokio::sync::mpsc::channel;
 
 pub mod auth;
 pub mod middleware;
 pub mod request;
 pub mod types;
+pub mod utils;
+pub mod models;
+pub mod libs;
+
+pub use utils::DB_POOL;
 
 async fn completions(data: web::Json<ChatCompletion>) -> HttpResponse {
     let endpoint = "/v1/chat/completions";
     if data.stream.is_none() || data.stream == Some(false) {
         // No stream mode
-        post_remote(endpoint, &data).await
+        post_remote(endpoint, &data, None).await
     } else {
         // Stream mode
-        post_remote_stream(endpoint, &data).await
+        let (sender, mut receiver) = channel::<Bytes>(1024);
+        tokio::spawn(async move {
+            while let Some(bytes) = receiver.recv().await {
+                println!(
+                    "Content from stream: {}",
+                    String::from_utf8(bytes.to_vec()).unwrap()
+                );
+            }
+        });
+
+        post_remote_stream(endpoint, &data, Some(sender)).await
     }
 }
 

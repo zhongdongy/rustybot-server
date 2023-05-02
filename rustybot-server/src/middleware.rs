@@ -10,7 +10,7 @@ use futures::{
     FutureExt,
 };
 
-use crate::auth::auth_with_file;
+use crate::auth::{auth_with_file, auth_with_db};
 
 pub type AuthenticationInfo = Rc<bool>;
 pub struct AuthenticateMiddleware<S> {
@@ -83,7 +83,8 @@ async fn authenticate(req: &ServiceRequest) -> bool {
         let hash = header_hash.unwrap().to_str().unwrap();
         let salt = header_salt.unwrap().to_str().unwrap();
         let id = header_id.unwrap().to_str().unwrap();
-        auth_with_file(id, hash, salt)
+        // auth_with_file(id, hash, salt)
+        auth_with_db(id, hash, salt).await
     } else {
         false
     }
