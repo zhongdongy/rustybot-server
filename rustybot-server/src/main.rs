@@ -1,8 +1,4 @@
-use rustybot_server::{
-    create_server,
-    models::{Auth, User, UserRole},
-    utils::db::init_pool,
-};
+use rustybot_server::{create_server, utils::db::init_pool};
 use std::{error::Error, path::PathBuf};
 
 fn main() -> Result<(), Box<dyn Error>> {

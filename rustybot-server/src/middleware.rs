@@ -10,7 +10,7 @@ use futures::{
     FutureExt,
 };
 
-use crate::auth::{auth_with_file, auth_with_db};
+use crate::auth::auth_with_db;
 
 pub type AuthenticationInfo = Rc<bool>;
 pub struct AuthenticateMiddleware<S> {
