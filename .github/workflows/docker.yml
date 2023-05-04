@@ -1,7 +1,9 @@
 name: Build & Push to Docker Hub
-
+run-name: Build and publish image to Docker Hub registry.
 on:
   push:
+    branches:
+      - master
     tags:
       - 'v*.*.*'
 
@@ -45,4 +47,4 @@ jobs:
           accept: 200,201,204
           timeout: 10000
           headers: '{ "Content-Type": "application/json" }'
-          body: '{"msg_type": "text", "content": {"text": "zhongdongy/rustybot-server:${{steps.meta.outputs.version}} 已经更新"}}'
+          body: '{"msg_type": "text", "content": {"text": "${{steps.meta.outputs.tags}} 已经更新"}}'
