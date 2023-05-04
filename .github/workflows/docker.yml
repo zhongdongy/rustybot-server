@@ -2,8 +2,6 @@ name: Build & Push to Docker Hub
 run-name: Build and publish image to Docker Hub registry.
 on:
   push:
-    branches:
-      - master
     tags:
       - 'v*.*.*'
 
