@@ -3,8 +3,8 @@ use std::collections::HashMap;
 use chrono::{DateTime, Utc};
 #[derive(sqlx::FromRow, Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Message {
-    pub msg_id: i8,
-    pub msg_chat_id: i8,
+    pub msg_id: Option<i32>,
+    pub msg_chat_id: i32,
     pub msg_sender: MessageSender,
     pub msg_content: String,
     pub msg_medias: Option<sqlx::types::Json<HashMap<String, sqlx::types::Json<MessageMedia>>>>,
@@ -46,6 +46,16 @@ impl From<i8> for MessageSender {
             1 => Self::Assistant,
             2 => Self::System,
             _ => panic!("Impossible message sender value `{value}`"),
+        }
+    }
+}
+
+impl Into<i8> for MessageSender {
+    fn into(self) -> i8 {
+        match self {
+            MessageSender::User => 0,
+            MessageSender::Assistant => 1,
+            MessageSender::System => 2,
         }
     }
 }
