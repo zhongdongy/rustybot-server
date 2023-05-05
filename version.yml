@@ -1,12 +1,23 @@
 latest:
-  version: "0.1.6"
+  version: "0.1.8"
+  date: "2023-05-05"
+  url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.7-x86_64.msi"
+  releases:
+    msi_x64: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.7-x86_64.msi"
+    deb_arm64: "https://sgp1.vultrobjects.com/static/rustybot/Rustybot_0.1.7-5_arm64.deb"
+    deb_x64: "https://sgp1.vultrobjects.com/static/rustybot/Rustybot_0.1.7-5_amd64.deb"
+  description: |
+    - 新增: 复制文本时的弹窗
+    - 新增: 鼠标悬停文字时的交互
+    - 更新: 提问和答复消息的布局位置
+history:
+- version: "0.1.6"
   date: "2023-04-24"
   url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.6-x86_64.msi"
   description: |
     - 新增: 复制文本时的弹窗
     - 新增: 鼠标悬停文字时的交互
     - 更新: 提问和答复消息的布局位置
-history:
 - version: "0.1.5"
   date: "2023-04-23"
   url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.5-x86_64.msi"

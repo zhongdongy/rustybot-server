@@ -42,6 +42,12 @@ where
             };
             yield output;
         }
+
+        if let Some(sender) = sender.clone() {
+            if let Err(e) = sender.send(Bytes::from(b"EOS__EOS".to_vec())).await {
+                log::error!(target: "app", "Error extracting bytes from stream: `{e}`");
+            };
+        }
     })
 }
 

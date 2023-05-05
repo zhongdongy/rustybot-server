@@ -1,4 +1,8 @@
-use rustybot_server::{create_server, utils::db::init_pool};
+use rustybot_server::{
+    create_server,
+    // models::{Chat, Message, MessageSender},
+    utils::db::init_pool,
+};
 use std::{error::Error, path::PathBuf};
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -24,18 +28,30 @@ fn main() -> Result<(), Box<dyn Error>> {
     rt.shutdown_background();
 
     // tokio::runtime::Runtime::new().unwrap().block_on(async {
-    //     // let mut user = User::find_by_name("admin").await.unwrap().unwrap();
-    //     // println!("User: {:?}", user);
-    //     // let auth = user.auth().await;
-    //     // // let auth = Auth::auth("admin").await.unwrap();
-    //     // println!("Auth: {:?}", auth);
-    //     // user = user.set_display_name("Biubiubiu");
-    //     // println!("Value: {}", user.save().await.unwrap());
+    // let mut user = User::find_by_name("admin").await.unwrap().unwrap();
+    // println!("User: {:?}", user);
+    // let auth = user.auth().await;
+    // // let auth = Auth::auth("admin").await.unwrap();
+    // println!("Auth: {:?}", auth);
+    // user = user.set_display_name("Biubiubiu");
+    // println!("Value: {}", user.save().await.unwrap());
+    // let mut chat = Chat::new(1).save().await.unwrap();
 
-    //     let mut user = User::new("haoqiy", "好奇大哥", &UserRole::Normal);
-    //     user = user.create().await.unwrap();
-    //     println!("User: {:?}", user);
-    //     println!("Auth key: {}", user.auth_key().await);
+    // println!("Chat: {:?}", chat);
+
+    // println!(
+    //     "Chats by user 1: {:#?}",
+    //     Chat::find_chats_by_user(1).await.unwrap()
+    // );
+    // let msg = Message::new(2, MessageSender::User, String::from("Hello!"), None)
+    //     .save()
+    //     .await
+    //     .unwrap();
+    // println!("Message: {:?}", msg);
+    // println!(
+    //     "Messages: {:#?}",
+    //     Chat::chat_by_id(2).await.unwrap().unwrap().history().await
+    // );
     // });
 
     Ok(())

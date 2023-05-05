@@ -45,4 +45,4 @@ jobs:
           accept: 200,201,204
           timeout: 10000
           headers: '{ "Content-Type": "application/json" }'
-          body: '{"msg_type": "text", "content": {"text": "${{steps.meta.outputs.tags}} 已经更新"}}'
+          body: '{"msg_type": "text", "content": {"text": "以下镜像已经更新:\n${{steps.meta.outputs.tags}}"}}'
