@@ -8,10 +8,7 @@ use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer};
 use bytes::Bytes;
 use middleware::AuthenticateMiddlewareFactory;
 use models::{Chat, Message, User};
-use rust_ai::openai::{
-    types::chat_completion::{ChatCompletionResponse, Chunk},
-    ChatCompletion,
-};
+use rust_ai::openai::{types::chat_completion::Chunk, ChatCompletion};
 use tokio::sync::mpsc::channel;
 
 pub mod auth;
@@ -73,7 +70,6 @@ async fn completions(req: HttpRequest, data: web::Json<ChatCompletion>) -> HttpR
         tokio::spawn(async move {
             let mut completion_message = String::new();
             while let Some(bytes) = receiver.recv().await {
-
                 let chunk_data_raw = String::from_utf8(bytes.to_vec()).unwrap();
 
                 if chunk_data_raw == "EOS__EOS" {
