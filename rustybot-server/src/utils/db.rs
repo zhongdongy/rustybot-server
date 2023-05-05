@@ -1,4 +1,5 @@
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc};
+use tokio::sync::{Mutex};
 
 use sqlx::{MySql, Pool};
 
@@ -21,7 +22,7 @@ pub fn init_pool() {
         .build()
         .unwrap()
         .block_on(async {
-            let mut db = DB_POOL.lock().unwrap();
+            let mut db = DB_POOL.lock().await;
             *db = Some(create_pool().await.unwrap());
         });
 }
