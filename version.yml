@@ -1,5 +1,14 @@
 latest:
-  version: "0.1.8"
+  version: "0.1.9"
+  date: "2023-05-06"
+  url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.9-x86_64.msi"
+  releases:
+    msi_x64: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.9-x86_64.msi"
+    deb_arm64: "https://sgp1.vultrobjects.com/static/rustybot/Rustybot_0.1.9-1_arm64.deb"
+  description: |
+    - 新增: GPT-4 模型
+history:
+- version: "0.1.8"
   date: "2023-05-05"
   url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.8-x86_64.msi"
   releases:
@@ -8,7 +17,6 @@ latest:
   description: |
     - 新增: 聊天记录功能
     - 更新: 提升应用程序稳定性
-history:
 - version: "0.1.6"
   date: "2023-04-24"
   url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.6-x86_64.msi"
