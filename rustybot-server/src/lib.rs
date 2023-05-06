@@ -50,8 +50,10 @@ async fn completions(req: HttpRequest, data: web::Json<ChatCompletion>) -> HttpR
 
     // Always save last message to given chat.
     let chat_id = chat_id.parse().unwrap();
+    let current_model: models::MessageModel = data.model.clone().into();
     let _new_prompt = Message::new(
         chat_id,
+        current_model,
         models::MessageSender::User,
         data.messages.last().unwrap().content.clone(),
         None,
@@ -110,6 +112,7 @@ async fn completions(req: HttpRequest, data: web::Json<ChatCompletion>) -> HttpR
             // Save response to database.
             let _new_prompt = Message::new(
                 chat_id,
+                current_model,
                 models::MessageSender::Assistant,
                 completion_message,
                 None,

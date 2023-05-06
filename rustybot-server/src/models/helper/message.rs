@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::models::{Message, MessageMedia, MessageSender};
+use crate::models::{Message, MessageMedia, MessageSender, MessageModel};
 use chrono::Utc;
 use rustybot_macros::get_connection;
 use sqlx::{types::Json, Acquire};
@@ -12,6 +12,7 @@ impl Message {
     /// - `cid`: chat ID
     pub fn new(
         cid: i32,
+        model: MessageModel,
         sender: MessageSender,
         content: String,
         media: Option<HashMap<String, MessageMedia>>,
@@ -29,6 +30,7 @@ impl Message {
         Self {
             msg_id: None,
             msg_chat_id: cid,
+            msg_model: model,
             msg_sender: sender,
             msg_content: content,
             msg_medias: formed_media,
@@ -48,6 +50,9 @@ impl Message {
 
         key_pairs.push("`msg_chat_id`");
         value_pairs.push(format!("{}", self.msg_chat_id));
+
+        key_pairs.push("`msg_model`");
+        value_pairs.push(format!("{}", Into::<i8>::into(self.msg_model.clone())));
 
         key_pairs.push("`msg_sender`");
         value_pairs.push(format!("{}", Into::<i8>::into(self.msg_sender.clone())));
