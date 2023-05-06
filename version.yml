@@ -1,5 +1,16 @@
 latest:
-  version: "0.1.9"
+  version: "0.1.10"
+  date: "2023-05-07"
+  url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.10-x86_64.msi"
+  releases:
+    msi_x64: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.10-x86_64.msi"
+    deb_arm64: "https://sgp1.vultrobjects.com/static/rustybot/Rustybot_0.1.10-1_arm64.deb"
+  description: |
+    - 新增: 可用 token 计数, 用于判断何时需要清理聊天记录
+    - 新增: 服务端将记录每次聊天内容所使用的模型, 用于评估模型表现
+    - 更新: 聊天记录的信号量获取机制
+history:
+- version: "0.1.9"
   date: "2023-05-06"
   url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.9-x86_64.msi"
   releases:
@@ -7,7 +18,6 @@ latest:
     deb_arm64: "https://sgp1.vultrobjects.com/static/rustybot/Rustybot_0.1.9-1_arm64.deb"
   description: |
     - 新增: GPT-4 模型
-history:
 - version: "0.1.8"
   date: "2023-05-05"
   url: "https://sgp1.vultrobjects.com/static/rustybot/rustybot-0.1.8-x86_64.msi"
