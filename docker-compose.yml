@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  rustybot-server:
+    container_name: rustybot
+    image: zhongdongy/rustybot-server:latest
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - type: bind
+        source: ./config.yml
+        target: /app/config.yml
