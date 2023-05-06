@@ -2152,7 +2152,7 @@ dependencies = [
 
 [[package]]
 name = "rustybot-server"
-version = "0.1.8"
+version = "0.1.9"
 dependencies = [
  "actix-identity",
  "actix-service",
